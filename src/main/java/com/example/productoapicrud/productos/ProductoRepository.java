@@ -10,7 +10,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 
 
 
-    List<Producto> findByNombreContaining(String nombre);
+    List<Producto> findProductosByNombreContaining(String nombre);
 
 
 

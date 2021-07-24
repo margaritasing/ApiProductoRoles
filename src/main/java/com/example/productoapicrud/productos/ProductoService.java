@@ -20,11 +20,27 @@ public class ProductoService {
         return productoRepository.findAll();
     }
 
-   public Producto modificar (Producto producto){
-        return productoRepository.save(producto);
-   }
 
-    public void salvar(Producto producto) {
+    public List<String> getNombreProductos() {
+        List<Producto> productos = productoRepository.findAll();
+        return productos.stream()
+                .map(producto -> producto.getNombre())
+                .toList();
+    }
+
+    public Producto getProductoPorId(Integer productoId) {
+        return productoRepository.findById(productoId).orElse(null);
+    }
+
+    public List<Producto> getProductoPorNombre(String nombre) {
+        return productoRepository.findProductosByNombreContaining(nombre);
+    }
+
+    public void deleteById(Integer productoId) {
+        productoRepository.deleteById(productoId);
+    }
+
+    public void save(Producto producto) {
         if (producto.getProducto_id() != null) {
             Producto productoExistente = productoRepository.findById(producto.getProducto_id()).orElse(null);
             if (productoExistente != null) {
@@ -35,20 +51,6 @@ public class ProductoService {
             } else producto.setProducto_id(null);
         }
         productoRepository.save(producto);
-    }
-
-
-    public Producto verPorId(Integer id) {
-        Producto producto = productoRepository.findById(id).orElse(null);
-        return producto;
-    }
-
-   public void deleteForId(Integer id){
-        productoRepository.deleteById(id);
-    }
-
-    public List<Producto> buscarNombreContenido(String nombre){
-        return productoRepository.findByNombreContaining(nombre);
     }
 
 
